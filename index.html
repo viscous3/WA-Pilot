@@ -26,7 +26,7 @@ html,body{height:100%;overflow:hidden;font-family:"Barlow",sans-serif;background
 .screen.active{display:flex;}
 
 /* HOME */
-.home-header{padding:52px 18px 16px;background:#111;border-bottom:3px solid var(--orange);}
+.home-header{padding:52px 18px 16px;background:linear-gradient(135deg,#0f2340 0%,#1a3a5c 100%);border-bottom:3px solid var(--orange);}
 body.light .home-header{background:linear-gradient(135deg,#0f2340 0%,#1a3a5c 100%);border-bottom:3px solid #58a6ff;}
 .home-logo-main{font-size:30px;font-weight:900;color:#fff;letter-spacing:0.06em;line-height:1;font-family:monospace;}
 .home-logo-main span{color:var(--orange);}
@@ -224,7 +224,7 @@ body.light
 .leaflet-popup-tip{background:var(--bg2)!important;}
 .leaflet-popup-content{margin:10px 14px!important;font-family:monospace;}
 .leaflet-control-zoom a{background:var(--bg2)!important;color:var(--text)!important;border-color:var(--border)!important;}
-body.light .home-footer{background:#0f2340;border-top:1px solid #1a3a5c;}
+body.light 
 body.light .stat-label{color:#6a8aaa;}
 body.light .home-stats{background:rgba(255,255,255,0.7);}
 body.light .footer-text{color:#3a6a9a;}
@@ -297,58 +297,6 @@ body.light .next-bridge-panel{background:#ffffff;border-color:#b8cde0;}
   </div>
 </div>
 
-<!-- MAP -->
-<!-- HOME -->
-<div id="home-screen" class="screen">
-  <div class="home-header">
-    <div class="home-logo-main">WA <span>PILOT</span></div>
-    <div class="home-logo-sub">Heavy Vehicle Pilot Guide</div>
-    <div class="home-logo-region">Western Australia</div>
-  </div>
-  <div class="home-stats">
-    <div class="stat-item"><div class="stat-num" style="color:var(--red)">3,503</div><div class="stat-label">Bridges</div></div>
-    <div class="stat-item"><div class="stat-num" style="color:var(--green)">1,664</div><div class="stat-label">Bays</div></div>
-    <div class="stat-item"><div class="stat-num" style="color:var(--yellow)">15</div><div class="stat-label">RTAA</div></div>
-  </div>
-  <div class="menu-list">
-    <div class="menu-item primary" onclick="showMap()">
-      <div class="menu-icon" style="background:rgba(240,136,62,0.15)">🗺️</div>
-      <div class="menu-item-text"><div class="menu-item-title">Map</div><div class="menu-item-desc">Navigate, filter bridges &amp; bays</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-    <div class="menu-item" onclick="showSearch()">
-      <div class="menu-icon" style="background:rgba(88,166,255,0.15)">🔍</div>
-      <div class="menu-item-text"><div class="menu-item-title">Search</div><div class="menu-item-desc">Bridge number, name or SLK</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-    <div class="menu-item clickable" onclick="showTGS()">
-      <div class="menu-icon" style="background:rgba(88,166,255,0.15)">🚦</div>
-      <div class="menu-item-text"><div class="menu-item-title">Traffic Guidance Schemes</div><div class="menu-item-desc">Search all 42 approved TGS documents</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-    <div class="menu-item clickable" onclick="showCoC()">
-      <div class="menu-icon" style="background:rgba(63,185,80,0.15)">📋</div>
-      <div class="menu-item-text"><div class="menu-item-title">Pilot Code of Conduct</div><div class="menu-item-desc">Search the May 2025 Code of Conduct</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-    <div class="menu-item" onclick="showSettings()">
-      <div class="menu-icon" style="background:rgba(139,148,158,0.15)">⚙️</div>
-      <div class="menu-item-text"><div class="menu-item-title">Settings</div><div class="menu-item-desc">Alerts, follow mode, theme</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-    <div class="menu-item clickable" onclick="showChecklist()">
-      <div class="menu-icon" style="background:rgba(245,200,66,0.15)">✅</div>
-      <div class="menu-item-text"><div class="menu-item-title">Field Test Checklist</div><div class="menu-item-desc">Test app functions and send report</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-  </div><div class="menu-item-desc">Search the May 2025 Code of Conduct</div></div>
-      <div class="menu-arrow">›</div>
-    </div>
-  </div>
-  <div class="home-footer">
-    <div class="footer-text">DATA: MAIN ROADS WA · 2026</div>
-    <button class="theme-btn" onclick="toggleTheme()" id="theme-btn">☀ LIGHT</button>
-  </div>
 </div>
 
 <!-- MAP -->
@@ -369,11 +317,10 @@ body.light .next-bridge-panel{background:#ffffff;border-color:#b8cde0;}
     <span style="font-family:monospace;font-size:9px;color:#ffffff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.95),0 0 8px rgba(0,0,0,0.8);">Metro Boundary</span>
   </div>
 </div>
-<div id="build-version" style="position:fixed;bottom:calc(env(safe-area-inset-bottom) + 36px);left:8px;z-index:999;background:rgba(13,17,23,0.75);border:1px solid #30363d;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#8b949e;pointer-events:none;">v7.3</div>
+<div id="build-version" style="position:fixed;bottom:calc(env(safe-area-inset-bottom) + 36px);left:8px;z-index:999;background:rgba(13,17,23,0.75);border:1px solid #30363d;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#8b949e;pointer-events:none;">v7.41</div>
   <div class="map-topbar">
     <div style="display:flex;gap:6px;pointer-events:all;">
       <button class="map-home-btn" onclick="showHome()">← Home</button>
-      <button class="mcb" id="btn-compass" onclick="cycleCompass()" style="font-size:0.65rem;display:none;background:var(--bg2);border-color:var(--border);color:var(--text2);">N↑</button>
     </div>
     <button class="map-search-btn" onclick="showSearch()">🔍</button>
   </div>
@@ -1807,8 +1754,8 @@ function openResult(i){
 window.addEventListener('resize',()=>{if(map)map.resize();});
 if('serviceWorker' in navigator){
   const swCode=`
-const CACHE='wapilot-v7.3';
-const TILE_CACHE='wapilot-tiles-v7.3';
+const CACHE='wapilot-v7.41';
+const TILE_CACHE='wapilot-tiles-v7.41';
 self.addEventListener('install',e=>{self.skipWaiting();});
 self.addEventListener('activate',e=>{
   e.waitUntil(
