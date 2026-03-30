@@ -66,6 +66,7 @@ body.light .home-header{background:#0f2340;border-bottom:3px solid #1a3a5c;}
 .map-header{position:absolute;top:0;left:0;right:0;z-index:501;background:#0f2340;padding:calc(env(safe-area-inset-top) + 16px) 16px 16px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a3a5c;}
 .map-header .footer-text{font-size:8px;color:#3a6a9a;font-family:monospace;}
 .map-header .theme-btn{margin-right:0;}
+.map-topbar{position:absolute;top:calc(env(safe-area-inset-top) + 64px);left:10px;right:10px;display:flex;align-items:center;justify-content:space-between;z-index:500;pointer-events:none;}
 .map-home-btn,.map-search-btn{pointer-events:all;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:monospace;box-shadow:0 2px 12px rgba(0,0,0,0.5);}
 .map-home-btn{padding:9px 14px;font-size:0.8rem;color:var(--text);}
 .map-search-btn{padding:9px 14px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin-right:12px;}
@@ -338,7 +339,7 @@ body.light .next-bridge-panel{background:#ffffff;border-color:#b8cde0;}
     <span style="font-family:monospace;font-size:9px;color:#ffffff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.95),0 0 8px rgba(0,0,0,0.8);">Metro Boundary</span>
   </div>
 </div>
-<div id="build-version" style="position:fixed;bottom:calc(env(safe-area-inset-bottom) + 461px);left:8px;z-index:999;background:rgba(13,17,23,0.75);border:1px solid #30363d;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#8b949e;pointer-events:none;">v7.4.42</div>
+<div id="build-version" style="position:fixed;bottom:calc(env(safe-area-inset-bottom) + 461px);left:8px;z-index:999;background:rgba(13,17,23,0.75);border:1px solid #30363d;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#8b949e;pointer-events:none;">v7.4.43</div>
   <!-- Navy header bar -->
   <div class="map-header">
     <div class="footer-text">DATA: MAIN ROADS WA · 2026</div>
@@ -2078,7 +2079,7 @@ function flyTo(){
   document.getElementById('btn-gps').classList.remove('ab');document.getElementById('btn-gps').style.opacity='1';document.getElementById('btn-gps').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" style="margin-right:3px;vertical-align:middle;"><circle cx="5" cy="5" r="4" fill="#8b949e" stroke="white" stroke-width="1.5"/></svg>GPS';
   document.getElementById('setting-follow').classList.remove('on');
   showMap();
-  setTimeout(()=>{map.setPadding({top:0,bottom:0,left:0,right:0});map.flyTo({center:[ln,la],zoom:15,padding:{top:0,bottom:0,left:0,right:0}});closeDetail();},150);
+  setTimeout(()=>{map.flyTo({center:[ln,la],zoom:15});closeDetail();},150);
 }
 
 // === SEARCH ===
@@ -2146,19 +2147,16 @@ function openResult(i){
   settings.follow=false;
   document.getElementById('btn-gps').classList.remove('ab');document.getElementById('btn-gps').style.opacity='1';document.getElementById('btn-gps').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" style="margin-right:3px;vertical-align:middle;"><circle cx="5" cy="5" r="4" fill="#8b949e" stroke="white" stroke-width="1.5"/></svg>GPS';
   document.getElementById('setting-follow').classList.remove('on');
+  if(h.type==='over'&&!vis['over']) toggleLayer('over');
+  if(h.type==='under'&&!vis['under']) toggleLayer('under');
+  if(h.type==='bay'&&!vis['bays']) toggleLayer('bays');
   function doFly(){
-    if(h.type==='over'&&!vis['over']) toggleLayer('over');
-    if(h.type==='under'&&!vis['under']) toggleLayer('under');
-    if(h.type==='bay'&&!vis['bays']) toggleLayer('bays');
     showDetail(h.type,h.d);
     setTimeout(()=>{
       const panel=document.getElementById('detail-popup');
-      const panelH=panel?panel.offsetHeight:320;
-      const topbar=document.querySelector('.map-topbar');
-      const topH=topbar?(topbar.getBoundingClientRect().bottom+16):130;
-      map.flyTo({center:[ln,la],zoom:15,padding:{top:topH,bottom:panelH+24,left:0,right:0}});
-      setTimeout(()=>{map.setPadding({top:0,bottom:0,left:0,right:0});},1000);
-    },260);
+      const panelH=panel?panel.offsetHeight:300;
+      map.flyTo({center:[ln,la],zoom:15,padding:{bottom:panelH+20}});
+    },100);
   }
   if(mapReady){setTimeout(doFly,150);}
   else{map.once('load',()=>setTimeout(doFly,150));}
@@ -2185,7 +2183,7 @@ document.addEventListener('visibilitychange',()=>{
 window.addEventListener('resize',()=>{if(map)map.resize();});
 if('serviceWorker' in navigator){
   const swCode=`
-const CACHE='wapilot-v7.4.42';
+const CACHE='wapilot-v7.4.43';
 const TILE_CACHE='wapilot-tiles-v7.4';
 self.addEventListener('install',e=>{self.skipWaiting();});
 self.addEventListener('activate',e=>{
