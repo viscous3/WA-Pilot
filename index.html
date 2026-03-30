@@ -2138,7 +2138,6 @@ function doSearch(q){
 }
 function openResult(i){
   const h=searchResults[i];if(!h)return;
-  if(!mapReady)initMap();
   showMap();
   let la,ln;
   if(h.type==='under'){la=h.d[7];ln=h.d[8];}
@@ -2151,14 +2150,16 @@ function openResult(i){
   if(h.type==='over'&&!vis['over']) toggleLayer('over');
   if(h.type==='under'&&!vis['under']) toggleLayer('under');
   if(h.type==='bay'&&!vis['bays']) toggleLayer('bays');
-  setTimeout(()=>{
+  function doFly(){
     showDetail(h.type,h.d);
     setTimeout(()=>{
       const panel=document.getElementById('detail-popup');
       const panelH=panel?panel.offsetHeight:300;
       map.flyTo({center:[ln,la],zoom:15,padding:{bottom:panelH+20}});
     },100);
-  },150);
+  }
+  if(mapReady){setTimeout(doFly,150);}
+  else{map.once('load',()=>setTimeout(doFly,150));}
 }
 
 // === WAKE LOCK ===
