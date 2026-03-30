@@ -339,7 +339,7 @@ body.light .next-bridge-panel{background:#ffffff;border-color:#b8cde0;}
     <span style="font-family:monospace;font-size:9px;color:#ffffff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.95),0 0 8px rgba(0,0,0,0.8);">Metro Boundary</span>
   </div>
 </div>
-<div id="build-version" style="position:fixed;bottom:calc(env(safe-area-inset-bottom) + 311px);left:8px;z-index:999;background:rgba(13,17,23,0.75);border:1px solid #30363d;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#8b949e;pointer-events:none;">v7.4.41</div>
+<div id="build-version" style="position:fixed;bottom:calc(env(safe-area-inset-bottom) + 461px);left:8px;z-index:999;background:rgba(13,17,23,0.75);border:1px solid #30363d;border-radius:6px;padding:3px 8px;font-family:monospace;font-size:11px;color:#8b949e;pointer-events:none;">v7.4.42</div>
   <!-- Navy header bar -->
   <div class="map-header">
     <div class="footer-text">DATA: MAIN ROADS WA · 2026</div>
@@ -2152,11 +2152,13 @@ function openResult(i){
     if(h.type==='under'&&!vis['under']) toggleLayer('under');
     if(h.type==='bay'&&!vis['bays']) toggleLayer('bays');
     showDetail(h.type,h.d);
-    requestAnimationFrame(()=>{
+    setTimeout(()=>{
       const panel=document.getElementById('detail-popup');
-      const panelH=panel?panel.offsetHeight:300;
-      map.flyTo({center:[ln,la],zoom:15,padding:{bottom:panelH+20}});
-    });
+      const panelH=panel?panel.offsetHeight:320;
+      const topbar=document.querySelector('.map-topbar');
+      const topH=topbar?(topbar.getBoundingClientRect().bottom+16):130;
+      map.flyTo({center:[ln,la],zoom:15,padding:{top:topH,bottom:panelH+24}});
+    },260);
   }
   if(mapReady){setTimeout(doFly,150);}
   else{map.once('load',()=>setTimeout(doFly,150));}
@@ -2183,7 +2185,7 @@ document.addEventListener('visibilitychange',()=>{
 window.addEventListener('resize',()=>{if(map)map.resize();});
 if('serviceWorker' in navigator){
   const swCode=`
-const CACHE='wapilot-v7.4.41';
+const CACHE='wapilot-v7.4.42';
 const TILE_CACHE='wapilot-tiles-v7.4';
 self.addEventListener('install',e=>{self.skipWaiting();});
 self.addEventListener('activate',e=>{
