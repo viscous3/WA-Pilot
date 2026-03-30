@@ -66,7 +66,6 @@ body.light .home-header{background:#0f2340;border-bottom:3px solid #1a3a5c;}
 .map-header{position:absolute;top:0;left:0;right:0;z-index:501;background:#0f2340;padding:calc(env(safe-area-inset-top) + 16px) 16px 16px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1a3a5c;}
 .map-header .footer-text{font-size:8px;color:#3a6a9a;font-family:monospace;}
 .map-header .theme-btn{margin-right:0;}
-.map-topbar{position:absolute;top:calc(env(safe-area-inset-top) + 64px);left:10px;right:10px;display:flex;align-items:center;justify-content:space-between;z-index:500;pointer-events:none;}
 .map-home-btn,.map-search-btn{pointer-events:all;background:var(--bg2);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-family:monospace;box-shadow:0 2px 12px rgba(0,0,0,0.5);}
 .map-home-btn{padding:9px 14px;font-size:0.8rem;color:var(--text);}
 .map-search-btn{padding:9px 14px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin-right:12px;}
@@ -2079,7 +2078,7 @@ function flyTo(){
   document.getElementById('btn-gps').classList.remove('ab');document.getElementById('btn-gps').style.opacity='1';document.getElementById('btn-gps').innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" style="margin-right:3px;vertical-align:middle;"><circle cx="5" cy="5" r="4" fill="#8b949e" stroke="white" stroke-width="1.5"/></svg>GPS';
   document.getElementById('setting-follow').classList.remove('on');
   showMap();
-  setTimeout(()=>{map.flyTo({center:[ln,la],zoom:15});closeDetail();},150);
+  setTimeout(()=>{map.setPadding({top:0,bottom:0,left:0,right:0});map.flyTo({center:[ln,la],zoom:15,padding:{top:0,bottom:0,left:0,right:0}});closeDetail();},150);
 }
 
 // === SEARCH ===
@@ -2157,7 +2156,8 @@ function openResult(i){
       const panelH=panel?panel.offsetHeight:320;
       const topbar=document.querySelector('.map-topbar');
       const topH=topbar?(topbar.getBoundingClientRect().bottom+16):130;
-      map.flyTo({center:[ln,la],zoom:15,padding:{top:topH,bottom:panelH+24}});
+      map.flyTo({center:[ln,la],zoom:15,padding:{top:topH,bottom:panelH+24,left:0,right:0}});
+      setTimeout(()=>{map.setPadding({top:0,bottom:0,left:0,right:0});},1000);
     },260);
   }
   if(mapReady){setTimeout(doFly,150);}
